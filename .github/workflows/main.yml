@@ -19,3 +19,4 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.npm }}" >> ~/.npmrc
           yarn
           yarn lint
+          git commit --amend --no-edit "."
