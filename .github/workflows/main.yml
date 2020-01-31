@@ -18,5 +18,13 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.npm }}" >> ~/.npmrc
           yarn
-          yarn lint || exit 0
-          git commit --amend --no-edit "."
+      - name: Lint
+        run: yarn lint || exit 0
+        
+      - name: Commit changes
+        run: git commit --amend --no-edit "."
+      - uses: ad-m/github-push-action@v0.5.0
+        with:
+          branch: figma/abc
+          github_token: ${{ secrets.github }}
+          force: true
