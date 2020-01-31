@@ -2,8 +2,8 @@ name: ABC
 
 on:
   pull_request:
-    branches: 
-      - figma/*
+    branches:
+    - figma/*
 
 jobs:
   build:
