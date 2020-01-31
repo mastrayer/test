@@ -1,0 +1,41 @@
+{
+  "name": "IconGenerator",
+  "version": "1.0.0",
+  "description": "Auto generate React Icon component from figma",
+  "main": "dist/app.js",
+  "repository": "https://github.com/riiid/www.git",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "webpack --mode=development --watch",
+    "build": "webpack --mode=production",
+    "lint": "eslint --fix src --ext .ts,.tsx"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
+    "html-webpack-inline-source-plugin": "^0.0.10",
+    "html-webpack-plugin": "^3.2.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "@riiid/eslint-config": "^1.0.0",
+    "@types/eslint": "^6.1.7",
+    "@types/node": "^13.5.1",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "eslint": "^6.8.0",
+    "eslint-cli": "^1.1.1",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "prettier": "^1.19.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}

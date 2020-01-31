@@ -1,0 +1,7 @@
+{
+  "name": "IconGenerator",
+  "id": "804218421893400638",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html"
+}
