@@ -3,13 +3,15 @@ figma.showUI(__html__);
 figma.ui.onmessage = msg => {
   if (msg.type === 'test') {
     for (const node of figma.currentPage.selection) {
-      node.exportAsync({
-        format: 'SVG',
-        contentsOnly: true
-      }).then((res) => {
-        const svg = String.fromCharCode(...res);
-        console.log(svg);
-      })
+      node
+        .exportAsync({
+          format: 'SVG',
+          contentsOnly: true,
+        })
+        .then(res => {
+          const svg = String.fromCharCode(...res);
+          console.log(svg);
+        });
     }
   }
 
