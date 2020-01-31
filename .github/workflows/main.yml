@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set Auth
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.npm }}" >> ~/.npmrc
       - name: Setup
-        run: yarn && yarn build
+      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.npm }}" >> ~/.npmrc
+      - run: yarn
+      - run: yarn lint
 #     - uses: actions/checkout@v2
 #     - name: Run a one-line script
 #       run: echo Hello, world!
