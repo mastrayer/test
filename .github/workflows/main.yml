@@ -3,8 +3,6 @@ name: ABC
 on:
   pull_request:
     branches:
-      - master
-      - figma/abc
       - 'figma/**'
 
 jobs:
