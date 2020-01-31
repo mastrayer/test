@@ -1,0 +1,7 @@
+{
+  "root": true,
+  "extends": "@riiid/eslint-config",
+  "settings": {
+    "import/internal-regex": "^@src/"
+  },
+}
