@@ -3,7 +3,7 @@ name: ABC
 on:
   pull_request:
     branches:
-      - figma/**
+      - 'figma/**'
 
 jobs:
   build:
