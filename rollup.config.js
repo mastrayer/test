@@ -4,6 +4,7 @@ import babel from 'rollup-plugin-babel';
 import pkg from './package.json';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import typescriptPlugin from 'rollup-plugin-typescript2';
+import { terser } from 'rollup-plugin-terser';
 
 process.env.BABEL_ENV = 'production';
 
@@ -19,12 +20,24 @@ export default {
       useTsconfigDeclarationDir: true,
       typescript: require('ttypescript')
     }),
-    babel({ extensions, include: ['src/**/*'], runtimeHelpers: true }),
+    babel({
+      extensions,
+      include: ['src/**/*'],
+      runtimeHelpers: true,
+      plugins: [
+        [
+          '@babel/plugin-transform-runtime',
+          {version: require('@babel/runtime/package.json').version, useESModules: true},
+        ],
+      ]}
+    ),
+    terser()
   ],
   output: [
     {
       file: pkg.module,
-      format: 'es',
+      format: 'esm',
+      indent: false
     }
   ]
 };
