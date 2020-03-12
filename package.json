@@ -1,6 +1,6 @@
 {
   "name": "@riiid/figma-icon-demo",
-  "version": "1.0.0-test6",
+  "version": "1.0.0-test7",
   "description": "",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
