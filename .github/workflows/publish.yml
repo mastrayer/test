@@ -12,6 +12,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: mkdir test
       - run: echo abcde >> test/test.txt
+      - run: echo abcde >> test/test2.txt
+      - run: echo abcde >> test/test3.txt
       - uses: actions/upload-artifact@v1
         with:
           name: test
