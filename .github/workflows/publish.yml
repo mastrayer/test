@@ -6,13 +6,24 @@ on:
     branches: master
 
 jobs:
-  publish:
+  A:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - if: github.event.pull_request.merged == true
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.npm }}" >> ~/.npmrc
-          yarn
-          yarn build
-          yarn publish --non-interactive
+      - run: mkdir test
+      - run: echo abcde >> test/test.txt
+      - uses: actions/upload-artifact@v1
+        with:
+          name: test
+          path: test
+  B:
+    needs: A
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v1
+        with:
+          name: test
+          path: test
+      - run: ls -al
+      - run: ls test
