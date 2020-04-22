@@ -12,6 +12,9 @@ jobs:
 
       - name: set npm token
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+      
+      - name: set env
+        run: echo FIGMA_TOKEN="${{ secrets.FIGMA_TOKEN }}" > .env
 
       # - name: cache node modules
       #   uses: actions/cache@v1
