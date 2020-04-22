@@ -1,28 +1,25 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "jsx": "preserve",
+    "outDir": "lib",
+    "rootDir": "src",
+    "declaration": true,
+    "inlineSourceMap": true,
+    "target": "es5",
+    "module": "commonjs",
     "lib": [
       "dom",
       "dom.iterable",
-      "es2017"
+      "es2020"
     ],
+    "jsx": "react",
     "strict": true,
-    "importHelpers": true,
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "declaration": true,
-    "declarationDir": "dist/types"
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node"
   },
-  "include": [
-    "src/**/*"
+  "exclude": [
+    "lib",
+    "scripts",
+    "node_modules"
   ]
 }

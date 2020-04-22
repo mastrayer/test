@@ -1,46 +1,61 @@
 {
-  "name": "@riiid/figma-icon-demo",
-  "version": "1.0.0-test7",
-  "description": "",
-  "module": "dist/index.esm.js",
-  "types": "dist/types/index.d.ts",
-  "files": [
-    "/dist"
-  ],
-  "priavte": true,
+  "name": "@riiid/icons",
+  "version": "0.3.0",
+  "description": "icons for riiid web",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "restricted"
+  },
   "scripts": {
-    "build": "yarn rollup -c"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/riiid/figma-icon-demo.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/riiid/figma-icon-demo/issues"
-  },
-  "homepage": "https://github.com/riiid/figma-icon-demo#readme",
-  "devDependencies": {
-    "@babel/core": "^7.8.7",
-    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.7",
-    "@babel/preset-react": "^7.8.3",
-    "@babel/preset-typescript": "^7.8.3",
-    "@types/react": "^16.9.23",
-    "react": "^16.13.0",
-    "rollup": "^1.31.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-peer-deps-external": "^2.2.2",
-    "rollup-plugin-terser": "^5.3.0",
-    "rollup-plugin-typescript2": "^0.26.0",
-    "ttypescript": "^1.5.10",
-    "typescript": "^3.8.3"
+    "build": "run-s clean fetch generate build:typescript build:copy",
+    "build:typescript": "tsc",
+    "build:copy": "cp -rf package.json lib",
+    "release": "run-s build release:lib",
+    "release:lib": "pushd lib && yarn publish --non-interactive --no-git-tag-version && popd",
+    "clean": "rm -rf src lib",
+    "check-new-version": "sucrase-node scripts/check-new-version",
+    "fetch": "sucrase-node scripts/fetch",
+    "generate": "sucrase-node scripts/generate",
+    "lint:fix": "eslint --fix './src/**/*' './scripts/**/*'"
   },
   "peerDependencies": {
-    "react": "^16.13.0"
+    "@types/react": "^16.9.25",
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@riiid/eslint-config": "^1.0.0",
+    "@types/axios": "^0.14.0",
+    "@types/lodash.groupby": "^4.6.6",
+    "@types/lodash.intersection": "^4.4.6",
+    "@types/node": "^13.13.2",
+    "@types/react": "^16.9.25",
+    "@types/svgo": "^1.3.1",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "lodash.groupby": "^4.6.0",
+    "lodash.intersection": "^4.4.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.2",
+    "react": "^16.13.1",
+    "sucrase": "^3.12.1",
+    "svgo": "^1.3.2",
+    "terser": "^4.6.7",
+    "typescript": "^3.8.3"
   }
 }

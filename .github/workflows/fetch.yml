@@ -1,0 +1,54 @@
+name: Sync figma icons
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: set npm token
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
+      # - name: cache node modules
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: node_modules
+      #     key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.OS }}-build-
+      #       ${{ runner.OS }}-
+
+      # - run: echo ${{ hashFiles('svgs/info.json') }}
+
+      - name: install dependencies
+        run: yarn
+
+      - name: check new version
+        id: version
+        run: echo "##[set-output name=hasNewVersion]true"
+        # run: echo "##[set-output name=hasNewVersion]$(yarn -s check-new-version)"
+        # run: yarn check-new-version
+
+      - name: test
+        if: failure()
+        run: echo test
+
+      - name: 'true'
+        if: steps.version.hasNewversion === true
+        run: echo TRUE
+
+      - name: 'false'
+        if: steps.version.hasNewversion === false
+        run: echo F
+
+  # fetch:
+  #   needs: init
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+
