@@ -34,7 +34,7 @@ jobs:
         # run: yarn check-new-version
 
       - name: test
-        run: echo ${{ steps.version }}
+        run: echo ${{ toJson(steps) }}
 
       - name: 'true'
         if: steps.version.hasNewversion == true
