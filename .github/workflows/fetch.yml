@@ -1,7 +1,7 @@
 name: Sync figma icons
 
 on:
-  pull_request:
+  push:
     branches: [ master ]
 
 jobs:
