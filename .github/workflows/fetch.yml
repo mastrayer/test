@@ -34,11 +34,11 @@ jobs:
         # run: yarn check-new-version
 
       - name: 'true'
-        if: steps.version.hasNewversion == 'true'
+        if: steps.version.outputs.hasNewversion == 'true'
         run: echo TRUE
 
       - name: 'false'
-        if: steps.version.hasNewversion == 'false'
+        if: steps.version.outputs.hasNewversion == 'false'
         run: echo F
 
   # fetch:
