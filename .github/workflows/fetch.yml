@@ -38,11 +38,11 @@ jobs:
         run: echo test
 
       - name: 'true'
-        if: steps.version.hasNewversion === true
+        if: steps.version.hasNewversion == true
         run: echo TRUE
 
       - name: 'false'
-        if: steps.version.hasNewversion === false
+        if: steps.version.hasNewversion == false
         run: echo F
 
   # fetch:
