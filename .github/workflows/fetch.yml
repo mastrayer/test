@@ -13,9 +13,6 @@ jobs:
       - name: set npm token
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
       
-      - name: set env
-        run: echo FIGMA_TOKEN="${{ secrets.FIGMA_TOKEN }}" > .env
-
       # - name: cache node modules
       #   uses: actions/cache@v1
       #   with:
@@ -33,6 +30,8 @@ jobs:
       - name: check new version
         id: version
         run: echo "##[set-output name=hasNewVersion]$(yarn -s check-new-version)"
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
         # run: yarn check-new-version
 
       - name: 'true'
