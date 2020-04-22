@@ -29,18 +29,16 @@ jobs:
 
       - name: check new version
         id: version
-        run: echo "##[set-output name=hasNewVersion]$(yarn -s check-new-version)"
+#         run: echo "##[set-output name=hasNewVersion]$(yarn -s check-new-version)"
+        run: echo "::set-output name=hasNewVersion::$(yarn -s check-new-version)"
         env:
           FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
-        # run: yarn check-new-version
 
-      - name: 'true'
+      - name: fetch and build new version
         if: steps.version.outputs.hasNewversion == 'true'
-        run: echo TRUE
-
-      - name: 'false'
-        if: steps.version.outputs.hasNewversion == 'false'
-        run: echo F
+        run: yarn build
+      
+      - 
 
   # fetch:
   #   needs: init
