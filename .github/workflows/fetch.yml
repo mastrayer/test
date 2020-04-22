@@ -29,8 +29,7 @@ jobs:
 
       - name: check new version
         id: version
-        run: echo "##[set-output name=hasNewVersion]true"
-        # run: echo "##[set-output name=hasNewVersion]$(yarn -s check-new-version)"
+        run: echo "##[set-output name=hasNewVersion]$(yarn -s check-new-version)"
         # run: yarn check-new-version
 
       - name: 'true'
