@@ -44,6 +44,7 @@ jobs:
         
 
   build:
+    needs: [check-new-version]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
