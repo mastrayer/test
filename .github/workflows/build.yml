@@ -1,0 +1,102 @@
+name: "@riiid/icons 업데이트"
+
+on:
+  push:
+    branches: [ asdas ]
+
+env: 
+  FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+
+jobs:
+  check-new-version:
+    runs-on: ubuntu-latest
+    outputs:
+      hasNewVersion: ${{ steps.version.outputs.hasNewVersion }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: set npm token
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
+      - name: cache node modules
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn
+
+      - run: yarn check-new-version
+
+      - name: check new version
+        id: version
+        run: echo "::set-output name=hasNewVersion::$(yarn -s check-new-version)"
+
+  fetch:
+    needs: [check-new-version]
+    if: needs.check-new-version.outputs.hasNewVersion == 'true'
+    outputs: 
+      packageVersion: ${{ steps.package.outputs.version }}
+      figmaLabel: ${{ steps.package.outputs.figmaLabel }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+      
+      - name: cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+      
+      - name: fetch
+        run: yarn fetch
+      
+      - name: upload svgs
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: svgs
+          path: svgs
+
+      - name: get package version
+        id: package
+        run: |
+          echo ::set-output name=version::$(jq -r .version package.json)
+          echo ::set-output name=figmaLabel::$(jq -r .version.label svgs/info.json)
+          
+
+  create-pull-request:
+    needs: [fetch]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: download artifact
+        uses: actions/download-artifact@v1.0.0
+        with:
+          name: svgs
+
+      - name: create pull request
+        id: cpr
+        uses: peter-evans/create-pull-request@v2
+        with:
+          branch: pr-icons/${{ needs.fetch.outputs.packageVersion }}
+          title: 🤖 @riiid/icons v${{ needs.fetch.outputs.packageVersion }} from figma ${{ needs.fetch.outputs.figmaLabel }}
+          body: ''
+          commit-message: ⬆️ @riiid/icons v${{ needs.fetch.outputs.packageVersion }}
+          reviewers: riiid-www
+          assignees: mastrayer
