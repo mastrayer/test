@@ -41,6 +41,8 @@ jobs:
   fetch:
     needs: [check-new-version]
     if: needs.check-new-version.outputs.hasNewVersion == 'true'
+    outputs: 
+      packageVersion: ${{ toJson(steps.version.outputs.version).version }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -63,29 +65,23 @@ jobs:
           name: svgs
           path: svgs
 
+      - name: get package version
+        id: version
+        run: echo ::set-output name=version::$(cat package.json)
+
   create-pull-request:
     needs: [fetch]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: origin
-        id: origin
-        run: echo ::set-output name=origin::$(cat svgs/info.json 2>/dev/null)
-
       - name: download artifact
         uses: actions/download-artifact@v1.0.0
         with:
           name: svgs
           
-      - name: new
-        id: new
-        run: echo ::set-output name=new::$(cat svgs/info.json 2>/dev/null)
-      
       - name: log
-        run: echo '${{ steps.origin.outputs.origin }}'
-      - name: log2
-        run: echo '${{ steps.new.outputs.new }}'
+        run: echo '${{ needs.fetch.outputs.packageVersion }}'
 
 #       - name: create pull request
 #         id: cpr
