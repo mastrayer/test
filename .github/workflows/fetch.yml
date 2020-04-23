@@ -69,15 +69,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: origin
+        run: cat svgs/info.json
+
       - name: download artifact
         uses: actions/download-artifact@v1.0.0
         with:
           name: svgs
       
+      - name: new
+        run: cat svgs/info.json
 
       - name: create pull request
         id: cpr
         uses: peter-evans/create-pull-request@v2
+        with:
+          branch: pr-icons/
 
       - name: Check outputs
         run: |
