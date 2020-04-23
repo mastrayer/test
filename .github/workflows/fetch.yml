@@ -85,6 +85,8 @@ jobs:
           
       - name: log
         run: echo '${{ needs.fetch.outputs.package }}'
+      - name: log2
+        run: echo '${{ needs.fetch.outputs.package.figmaLabel }}'
 
 #       - name: create pull request
 #         id: cpr
