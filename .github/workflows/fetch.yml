@@ -81,7 +81,7 @@ jobs:
           name: svgs
           
       - name: log
-        run: echo '${{ needs.fetch.outputs.packageVersion }}'
+        run: echo '${{ toJson(needs) }}'
 
 #       - name: create pull request
 #         id: cpr
