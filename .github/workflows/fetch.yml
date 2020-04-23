@@ -11,7 +11,7 @@ jobs:
   check-new-version:
     runs-on: ubuntu-latest
     outputs:
-      test: steps.version.outputs
+      test: ${{ steps.version.outputs }}
     steps:
       - uses: actions/checkout@v2
 
