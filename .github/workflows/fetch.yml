@@ -10,6 +10,8 @@ env:
 jobs:
   check-new-version:
     runs-on: ubuntu-latest
+    outputs:
+      test: ${{ toJson(steps) }}
     steps:
       - uses: actions/checkout@v2
 
@@ -41,9 +43,6 @@ jobs:
       - name: check new version
         id: version
         run: echo "::set-output name=hasNewVersion::$(yarn -s check-new-version)"
-
-    outputs:
-      test: ${{ toJson(steps) }}
 
   build:
     needs: [check-new-version]
