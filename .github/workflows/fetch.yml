@@ -42,7 +42,7 @@ jobs:
     needs: [check-new-version]
     if: needs.check-new-version.outputs.hasNewVersion == 'true'
     outputs: 
-      packageVersion: ${{ steps.version.outputs.version }}
+      package: ${{ steps.package.outputs }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -66,8 +66,11 @@ jobs:
           path: svgs
 
       - name: get package version
-        id: version
-        run: echo ::set-output name=version::$(jq -r .version package.json)
+        id: package
+        run:
+          echo ::set-output name=packageVersion::$(jq -r .version package.json)
+          echo ::set-output name=figmaLabel::$(jq -r .version.label svgs/info.json)
+          
 
   create-pull-request:
     needs: [fetch]
