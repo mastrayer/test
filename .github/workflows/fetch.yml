@@ -35,6 +35,8 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn
 
+      - run: yarn check-new-version
+
       - name: check new version
         id: version
         run: echo "::set-output name=hasNewVersion::$(yarn -s check-new-version)"       
