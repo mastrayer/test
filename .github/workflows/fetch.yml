@@ -71,7 +71,7 @@ jobs:
 
       - name: origin
         id: origin
-        run: echo ::set-output name=origin::'$(cat svgs/info.json 2>/dev/null)'
+        run: echo ::set-output name=origin::$(cat svgs/info.json 2>/dev/null)
 
       - name: download artifact
         uses: actions/download-artifact@v1.0.0
@@ -80,7 +80,7 @@ jobs:
           
       - name: new
         id: new
-        run: echo ::set-output name=new::'$(cat svgs/info.json 2>/dev/null)'
+        run: echo ::set-output name=new::$(cat svgs/info.json 2>/dev/null)
       
       - name: log
         run: echo '${{ steps.origin.outputs.origin }}'
