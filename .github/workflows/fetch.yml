@@ -4,11 +4,12 @@ on:
   push:
     branches: [ master ]
 
+env: 
+  FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+
 jobs:
   check-new-version:
     runs-on: ubuntu-latest
-    env:
-      FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
     steps:
       - uses: actions/checkout@v2
 
