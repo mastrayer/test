@@ -67,7 +67,7 @@ jobs:
 
       - name: get package version
         id: package
-        run:
+        run: |
           echo ::set-output name=packageVersion::$(jq -r .version package.json)
           echo ::set-output name=figmaLabel::$(jq -r .version.label svgs/info.json)
           
@@ -84,7 +84,7 @@ jobs:
           name: svgs
           
       - name: log
-        run: echo '${{ toJson(needs) }}'
+        run: echo '${{ needs.fetch.outputs.package }}'
 
 #       - name: create pull request
 #         id: cpr
