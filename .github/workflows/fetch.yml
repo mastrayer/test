@@ -67,10 +67,7 @@ jobs:
 
       - name: get package version
         id: version
-        run: echo ::set-output name=version::$(cat package.json | jq .version)
-      
-      - name: debug
-        run: echo '${{ steps.version.outputs.version }}'
+        run: echo ::set-output name=version::$(jq -r .version package.json)
 
   create-pull-request:
     needs: [fetch]
