@@ -74,9 +74,6 @@ jobs:
         with:
           name: svgs
       
-      - name: create pull request
-        run: yarn build
-      
       - name: test
         run: ls svgs
 
