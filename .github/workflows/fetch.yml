@@ -68,6 +68,9 @@ jobs:
       - name: get package version
         id: version
         run: echo ::set-output name=version::$(cat package.json)
+      
+      - name: debug
+        run: echo '${{ toJson(steps.version.outputs.version) }}'
 
   create-pull-request:
     needs: [fetch]
