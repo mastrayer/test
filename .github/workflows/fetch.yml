@@ -42,7 +42,7 @@ jobs:
     needs: [check-new-version]
     if: needs.check-new-version.outputs.hasNewVersion == 'true'
     outputs: 
-      packageVersion: ${{ toJson(steps.version.outputs.version).version }}
+      packageVersion: ${{ steps.version.outputs.version }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -67,7 +67,7 @@ jobs:
 
       - name: get package version
         id: version
-        run: echo ::set-output name=version::${{ parseJson($(cat package.json)).version }}
+        run: echo ::set-output name=version::$(cat package.json | jq .version)
       
       - name: debug
         run: echo '${{ steps.version.outputs.version }}'
