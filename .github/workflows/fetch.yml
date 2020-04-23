@@ -43,7 +43,7 @@ jobs:
         run: echo "::set-output name=hasNewVersion::$(yarn -s check-new-version)"
 
     outputs:
-      test: ${{ toJSON(steps) }}
+      test: ${{ toJson(steps) }}
 
   build:
     needs: [check-new-version]
