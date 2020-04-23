@@ -42,7 +42,7 @@ jobs:
     needs: [check-new-version]
     if: needs.check-new-version.outputs.hasNewVersion == 'true'
     outputs: 
-      package: ${{ steps.package.outputs }}
+      package: ${{ toJson(steps.package.outputs) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
