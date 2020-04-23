@@ -11,7 +11,7 @@ jobs:
   check-new-version:
     runs-on: ubuntu-latest
     outputs:
-      test: ${{ toJson(steps) }}
+      hasNewVersion: ${{ steps.version.outputs.hasNewVersion }}
     steps:
       - uses: actions/checkout@v2
 
