@@ -15,11 +15,11 @@ jobs:
       - name: set npm token
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
-      - name: share npmrc
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: npmrc
-          path: .npmrc
+#       - name: share npmrc
+#         uses: actions/upload-artifact@v1.0.0
+#         with:
+#           name: npmrc
+#           path: .npmrc
 
       - name: install dependencies
         run: yarn
@@ -35,13 +35,7 @@ jobs:
 
       - name: check new version
         id: version
-        run: echo "::set-output name=hasNewVersion::$(yarn -s check-new-version)"
-
-      - name: fetch and build new version
-        id: build
-        if: steps.version.outputs.hasNewVersion == 'true'
-        run: yarn build
-        
+        run: echo "::set-output name=hasNewVersion::$(yarn -s check-new-version)"       
 
   build:
     needs: [check-new-version]
@@ -49,10 +43,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: download artifact
-        uses: actions/download-artifact@v1.0.0
-        with:
-          name: npmrc
+      - run: echo ${{ Json(needs) }}
+#       - name: download artifact
+#         uses: actions/download-artifact@v1.0.0
+#         with:
+#           name: npmrc
       
       - name: cache node modules
         uses: actions/cache@v1
@@ -63,7 +58,9 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
       
-      - name: test
-        run: echo $(ls -al)
+      - name: fetch and build new version
+#         id: build
+#         if: steps.version.outputs.hasNewVersion == 'true'
+        run: yarn build
 
 
