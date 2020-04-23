@@ -42,7 +42,8 @@ jobs:
     needs: [check-new-version]
     if: needs.check-new-version.outputs.hasNewVersion == 'true'
     outputs: 
-      package: ${{ toJson(steps.package.outputs) }}
+      packageVersion: ${{ steps.package.outputs.version }}
+      figmaLabel: ${{ steps.package.outputs.figmaLabel }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -68,7 +69,7 @@ jobs:
       - name: get package version
         id: package
         run: |
-          echo ::set-output name=packageVersion::$(jq -r .version package.json)
+          echo ::set-output name=version::$(jq -r .version package.json)
           echo ::set-output name=figmaLabel::$(jq -r .version.label svgs/info.json)
           
 
@@ -84,15 +85,16 @@ jobs:
           name: svgs
           
       - name: log
-        run: echo '${{ needs.fetch.outputs.package }}'
+        run: echo '${{ needs.fetch.outputs.packageVersion }}'
       - name: log2
-        run: echo '${{ needs.fetch.outputs.package.figmaLabel }}'
+        run: echo '${{ needs.fetch.outputs.figmaLabel }}'
 
-#       - name: create pull request
-#         id: cpr
-#         uses: peter-evans/create-pull-request@v2
-#         with:
-#           branch: pr-icons/
+      - name: create pull request
+        id: cpr
+        uses: peter-evans/create-pull-request@v2
+        with:
+          branch: pr-icons/${{ needs.fetch.outputs.packageVersion }}
+          title: ":arrow_up: @riiid/icons v${{ needs.fetch.outputs.packageVersion }} from figma ${{ needs.fetch.outputs.figmaLabel }}"
 
 #       - name: Check outputs
 #         run: |
