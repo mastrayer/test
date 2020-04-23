@@ -14,6 +14,8 @@ jobs:
       hasNewVersion: ${{ steps.version.outputs.hasNewVersion }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: master
 
       - name: set npm token
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
@@ -47,6 +49,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: master
       
       - name: cache node modules
         uses: actions/cache@v1
@@ -78,6 +82,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: master
 
       - name: download artifact
         uses: actions/download-artifact@v1.0.0
