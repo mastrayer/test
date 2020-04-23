@@ -10,8 +10,6 @@ env:
 jobs:
   check-new-version:
     runs-on: ubuntu-latest
-    outputs:
-      test: 123
     steps:
       - uses: actions/checkout@v2
 
@@ -42,7 +40,7 @@ jobs:
 
       - name: check new version
         id: version
-        run: echo "::set-output name=hasNewVersion::$(yarn -s check-new-version)"       
+        run: echo "::set-output name=hasNewVersion::$(yarn -s check-new-version)"
 
   build:
     needs: [check-new-version]
@@ -50,7 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: echo ${{ toJson(needs) }}
+      - run: echo ${{ toJson(job) }}
 #       - name: download artifact
 #         uses: actions/download-artifact@v1.0.0
 #         with:
